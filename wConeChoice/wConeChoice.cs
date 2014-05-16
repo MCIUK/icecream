@@ -47,11 +47,13 @@ namespace SitefinityWebApp.wConeChoice
         /// </summary>
         public wConeChoice()
         {
-            this.Title = "wConeChoice";
+            this.Title = "wConeChoice";          
         }
         #endregion
 
         #region Public properties (will show up in dialog)
+        private string sTitle = "Choose a cone";
+        
         /// <summary>
         /// Example string
         /// </summary>
@@ -222,6 +224,15 @@ namespace SitefinityWebApp.wConeChoice
         }
         #endregion
 
+        #region  Table rows of current flavours
+        protected virtual Table tFlavours
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
         #region InitializeControls method
         /// <summary>
         /// Initializes the controls.
@@ -233,10 +244,33 @@ namespace SitefinityWebApp.wConeChoice
         {
             // Set the label values
             this.ExampleLabel.Text = this.Example;
-            this.TitleLabel.Text = this.Title;
+            this.TitleLabel.Text = sTitle;
             this.DescriptionLabel.Text = this.Description;
+            //this.tFlavours. = getFlavours();
+        }
+        #endregion
 
-            this.TextBox1.Text = GetCurrentSitefinityUser();
+        #region getFlavours method
+        private TableRowCollection getFlavours()
+        {
+            string sResult = "";
+            dbIceCreamEntities1 db1 = new dbIceCreamEntities1();
+            var rs = (from t in db1.sf_choosecone
+                      where t.id != null
+                      select t);
+            
+            // build rows for template
+            TableRowCollection allRows = new TableRowCollection();
+            foreach (var cone in rs)
+            {
+                TableRow row = new TableRow();
+                TableCell cell = new TableCell();
+                cell.Text = cone.w_cone_choice;
+                row.Cells.Add(cell);
+                allRows.Add(row);
+            }
+
+            return allRows;
         }
         #endregion
 

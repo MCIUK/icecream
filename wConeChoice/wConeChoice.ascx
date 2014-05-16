@@ -7,3 +7,6 @@
     <sf:SitefinityLabel runat="server" ID="descriptionLabel" WrapperTagName="div" CssClass="sfDescription"/>
     <sf:SitefinityLabel runat="server" ID="exampleLabel" WrapperTagName="div" CssClass="sfExample"/>
 </div>
+<hr>
+<asp:Table ID="tFlavours" runat="server" />
+
